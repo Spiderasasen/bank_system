@@ -6,6 +6,8 @@ The project will have the main systems of a bank
 - deposit money
 - withdraw money
 - normal account system
+  - login (DVWA username and password)
+    - any other password or username is not going to work
 - possibly sending and receiving money from another account
 
 ## ALL TEXT BASE ##
