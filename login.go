@@ -13,45 +13,31 @@ var password string
 
 func mainLogin() bool {
 	//username
-	if usernameArea() {
+	if loginArea("username", &username, &usernameHelp, "What is the username in DVWA?", "The username is \"admin\"", "admin", "username") {
 		//password
 		var passwordSection bool = false
 		for !passwordSection {
-			passwordSection = passwordArea()
+			passwordSection = loginArea("password", &password, &passwordHelp, "What is the password in DVWA?", "The password is \"password\"", "password", "password")
 		}
 		return true
 	}
 	return false
 }
 
-// making the password
-func passwordArea() bool {
-	//gets the password
-	fmt.Println("Enter Password: \n" +
-		"type \"help\" if you forgot your password")
-	fmt.Scan(&password)
+// main login area
+func loginArea(prompt string, input *string, helpCounter *int, hint1 string, hint2 string, answer string, label string) bool {
+	//gets the prompt to repeat the same system needed
+	fmt.Println("Enter a " + prompt + ": \n" +
+		"type \"help\" if you forgot your" + prompt)
 
-	//puts the password in lowercase
-	password = strings.ToLower(password)
+	//gets the string input
+	fmt.Scan(input)
 
-	if loginChecker(password, &passwordHelp, "What is the password in DVWA?", "The password is \"password\"", "password", "password") {
-		return true
-	}
-	return false
-}
+	//places the string to be lowercase
+	*input = strings.ToLower(*input)
 
-// making the username secion
-func usernameArea() bool {
-	//gets the username
-	fmt.Println("Please enter a username: \n" +
-		"type \"help\" if you forgot your username")
-	fmt.Scan(&username)
-
-	//puts the username input in lowercase
-	username = strings.ToLower(username)
-
-	//checks if the username is correct
-	if loginChecker(username, &usernameHelp, "What is the username in DVWA?", "The username is \"admin\"", "admin", "username") {
+	//checks if the input is valid or not
+	if loginChecker(*input, helpCounter, hint1, hint2, answer, label) {
 		return true
 	}
 
