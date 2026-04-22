@@ -12,7 +12,15 @@ var username string
 //var password string
 
 func mainLogin() bool {
+	//username
+	if usernameArea() {
+		return true
+	}
+	return false
+}
 
+// making the username secion
+func usernameArea() bool {
 	//gets the username
 	fmt.Println("Please enter a username: \n" +
 		"type \"help\" if you forgot your username")
