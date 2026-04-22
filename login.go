@@ -11,6 +11,10 @@ var username string
 var passwordHelp int
 var password string
 
+// getters
+func getUsername() string { return username }
+func getPassword() string { return password }
+
 func mainLogin() bool {
 	//username
 	if loginArea("username", &username, &usernameHelp, "What is the username in DVWA?", "The username is \"admin\"", "admin", "username") {
