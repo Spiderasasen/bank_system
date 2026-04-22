@@ -1,10 +1,10 @@
 package main
 
-import "fmt"
-
 func main() {
-	for mainLogin() {
-		fmt.Println("does call the function")
-		break
+	//boolean for loop
+	var login bool
+
+	for !login {
+		login = mainLogin()
 	}
 }
