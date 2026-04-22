@@ -28,7 +28,7 @@ func mainLogin() bool {
 func loginArea(prompt string, input *string, helpCounter *int, hint1 string, hint2 string, answer string, label string) bool {
 	//gets the prompt to repeat the same system needed
 	fmt.Println("Enter a " + prompt + ": \n" +
-		"type \"help\" if you forgot your" + prompt)
+		"type \"help\" if you forgot your " + prompt)
 
 	//gets the string input
 	fmt.Scan(input)
