@@ -6,7 +6,7 @@ import (
 )
 
 // private vars
-var usernameHelp int
+var usernameHelp int //used as a pointer in the function i call in line 24
 var username string
 
 //var password string
@@ -19,27 +19,37 @@ func mainLogin() bool {
 	fmt.Scan(&username)
 
 	//puts the username input in lowercase
-	username = strings.TrimSpace(username)
+	username = strings.ToLower(username)
 
-	//if the username is guessed admin correctly it will stop the loop
-	if username == "admin" {
+	if loginChecker(username, &usernameHelp, "What is the username in DVWA?", "The username is \"admin\"", "admin", "username") {
+		return true
+	}
+
+	return false
+}
+
+// checks if the login was successful or not
+func loginChecker(userInput string, userHelp *int, hint1 string, hint2 string, answer string, outputType string) bool {
+	//if the user input is the same as the intended answer
+	if userInput == answer {
 		return true
 
-		//else if the username asked for help, it will return some help
-	} else if username == "help" {
-		usernameHelp++
+		//the user ask for help
+	} else if userInput == "help" {
+		*userHelp++ //gets the orginal input from the class then returns that input
 
-		//if the user asked for help once, it will give out a hint
-		if usernameHelp == 1 {
-			fmt.Println("What is the username in DVWA?")
-			//otherwise it will give out the username
+		//if userHelp == 1, give hint1
+		if *userHelp == 1 {
+			fmt.Println(hint1 + "\n")
+
+			//will print hint 2
 		} else {
-			fmt.Println("The username is \"admin\"")
+			fmt.Println(hint2 + "\n")
 		}
 
-		//if the username is wrong, it will say its wrong
+		//if the user just put in a wrong input
 	} else {
-		fmt.Println("Wrong Username")
+		fmt.Println("Wrong " + outputType + " \n")
 	}
 
 	return false
