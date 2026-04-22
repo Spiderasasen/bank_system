@@ -17,16 +17,18 @@ func mainBank(user string, pass string) bool {
 	fmt.Println("Password: " + pass)
 
 	//showing the amount and the options
-	fmt.Println("\nAmount: " + strconv.Itoa(amount) + "\n\nPlease select a option")
+	fmt.Println("\nAmount: " + strconv.Itoa(amount) + "\nOn Hand: " + strconv.Itoa(onHand) + "\n\nPlease select a option")
 	for option := range options {
 		fmt.Println(options[option])
 	}
 
 	fmt.Scan(&choice)
 
+	//seeing what option the user selected
 	switch choice {
 	case "a":
-		fmt.Println("deposit")
+		fmt.Println("deposit...")
+		amount = deposit(&amount, &onHand)
 		break
 	case "b":
 		fmt.Println("withdraw")
@@ -38,3 +40,23 @@ func mainBank(user string, pass string) bool {
 
 	return false
 }
+
+// depositing
+func deposit(in *int, hand *int) int {
+	fmt.Println("How much would you like to deposit?")
+
+	//scanning the input
+	_, err := fmt.Scanf("%d", in)
+	if err != nil {
+		fmt.Println("Invalid input")
+		//if the user is less then 0, yell at the user
+	} else if *in < 0 {
+		fmt.Println("Please enter a positive amount")
+		//otherwise allow the user to deposit the money
+	} else {
+		*hand -= *in
+	}
+	return *in
+}
+
+//withdrawing
