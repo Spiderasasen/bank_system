@@ -21,6 +21,7 @@ func mainLogin() bool {
 	//puts the username input in lowercase
 	username = strings.ToLower(username)
 
+	//checks if the username is correct
 	if loginChecker(username, &usernameHelp, "What is the username in DVWA?", "The username is \"admin\"", "admin", "username") {
 		return true
 	}
