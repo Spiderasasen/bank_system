@@ -8,12 +8,33 @@ import (
 // private vars
 var usernameHelp int //used as a pointer in the function i call in line 24
 var username string
-
-//var password string
+var passwordHelp int
+var password string
 
 func mainLogin() bool {
 	//username
 	if usernameArea() {
+		//password
+		var passwordSection bool = false
+		for !passwordSection {
+			passwordSection = passwordArea()
+		}
+		return true
+	}
+	return false
+}
+
+// making the password
+func passwordArea() bool {
+	//gets the password
+	fmt.Println("Enter Password: \n" +
+		"type \"help\" if you forgot your password")
+	fmt.Scan(&password)
+
+	//puts the password in lowercase
+	password = strings.ToLower(password)
+
+	if loginChecker(password, &passwordHelp, "What is the password in DVWA?", "The password is \"password\"", "password", "password") {
 		return true
 	}
 	return false
@@ -41,6 +62,7 @@ func usernameArea() bool {
 func loginChecker(userInput string, userHelp *int, hint1 string, hint2 string, answer string, outputType string) bool {
 	//if the user input is the same as the intended answer
 	if userInput == answer {
+		fmt.Println()
 		return true
 
 		//the user ask for help
