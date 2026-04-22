@@ -11,6 +11,7 @@ var onHand int = 2000
 var options []string = []string{"a. deposit", "b. withdraw", "c. logout"}
 
 func mainBank(user string, pass string) bool {
+	var choice string
 	//printing out the user and the password
 	fmt.Println("Username: " + user)
 	fmt.Println("Password: " + pass)
@@ -21,5 +22,19 @@ func mainBank(user string, pass string) bool {
 		fmt.Println(options[option])
 	}
 
-	return true
+	fmt.Scan(&choice)
+
+	switch choice {
+	case "a":
+		fmt.Println("deposit")
+		break
+	case "b":
+		fmt.Println("withdraw")
+		break
+	case "c":
+		fmt.Println("Logging out...")
+		return true
+	}
+
+	return false
 }
