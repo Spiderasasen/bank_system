@@ -32,7 +32,8 @@ func mainBank(user string, pass string) bool {
 		amount = deposit(&amount, &onHand)
 		break
 	case "b":
-		fmt.Println("withdraw")
+		fmt.Println("withdraw...")
+		onHand = withdraw(&amount, &onHand)
 		break
 	case "c":
 		fmt.Println("Logging out...")
@@ -43,22 +44,59 @@ func mainBank(user string, pass string) bool {
 }
 
 // depositing
-func deposit(in *int, hand *int) int {
-	fmt.Println("How much would you like to deposit?")
+func deposit(balance *int, hand *int) int {
+	fmt.Println("\nHow much would you like to deposit?")
 
-	//scanning the input
-	_, err := fmt.Scanf("%d", in)
+	var depositAmount int
+	_, err := fmt.Scanf("%d", &depositAmount)
+
 	if err != nil {
 		fmt.Println("Invalid input")
-		//if the user is less then 0, yell at the user
-	} else if *in < 0 {
-		fmt.Println("Please enter a positive amount")
-		*in = int(math.Abs(float64(*in)))
-		//otherwise allow the user to deposit the money
-	} else {
-		*hand -= *in
+		return *balance
 	}
-	return *in
+
+	if depositAmount < 0 {
+		fmt.Println("Please enter a positive amount")
+		depositAmount = int(math.Abs(float64(depositAmount)))
+	}
+
+	if *hand < depositAmount {
+		fmt.Println("You don't have enough cash on hand")
+		return *balance
+	}
+
+	*hand -= depositAmount
+	*balance += depositAmount
+
+	return *balance
+}
+
+// withdrawing
+func withdraw(balance *int, hand *int) int {
+	fmt.Println("\nHow much would you like to withdraw?")
+
+	var withdrawAmount int
+	_, err := fmt.Scanf("%d", &withdrawAmount)
+
+	if err != nil {
+		fmt.Println("Invalid input")
+		return *hand
+	}
+
+	if withdrawAmount < 0 {
+		fmt.Println("Please enter a positive amount")
+		withdrawAmount = int(math.Abs(float64(withdrawAmount)))
+	}
+
+	if *balance < withdrawAmount {
+		fmt.Println("You don't have enough in your account")
+		return *hand
+	}
+
+	*balance -= withdrawAmount
+	*hand += withdrawAmount
+
+	return *hand
 }
 
 //withdrawing
