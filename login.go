@@ -26,11 +26,12 @@ func mainLogin() bool {
 	}
 
 	//username
-	if loginArea("username", "Type \"new\" to make a new account", &username, "new", "admin", "username") {
+	if loginArea("username", "Type \"new\" to make a new account", &username, "new", usernames, "admin", "username") {
 		//password
 		var passwordSection bool = false
 		for !passwordSection {
-			passwordSection = loginArea("password", "Type \"help\" if you forgot your password", &password, "help", "password", "password")
+			passwordSection = loginArea("password", "Type \"help\" if you forgot your password", &password, "help", usernames, "password", "password")
+			break
 		}
 		return true
 	}
@@ -38,7 +39,7 @@ func mainLogin() bool {
 }
 
 // main login area
-func loginArea(prompt string, questionArea string, input *string, hintCommand string, answer string, label string) bool {
+func loginArea(prompt string, questionArea string, input *string, hintCommand string, accountSystem []string, answer string, label string) bool {
 	//gets the prompt to repeat the same system needed
 	fmt.Println("Enter a " + prompt + ": \n" +
 		Yellow + questionArea + Reset)
@@ -50,7 +51,7 @@ func loginArea(prompt string, questionArea string, input *string, hintCommand st
 	*input = strings.ToLower(*input)
 
 	//checks if the input is valid or not
-	if loginChecker(*input, prompt, hintCommand, answer, label) {
+	if loginChecker(*input, prompt, hintCommand, accountSystem, answer, label) {
 		return true
 	}
 
@@ -58,29 +59,59 @@ func loginArea(prompt string, questionArea string, input *string, hintCommand st
 }
 
 // checks if the login was successful or not
-func loginChecker(userInput string, section string, hintCommand string, answer string, outputType string) bool {
-	//if the user input is the same as the intended answer
-	if userInput == answer {
-		fmt.Println()
-		return true
+func loginChecker(userInput string, section string, hintCommand string, accountSystem []string, answer string, outputType string) bool {
 
-		//the user ask for help
-	} else if userInput == hintCommand {
-		//if the user is in the login page and types new
-		if hintCommand == "new" && section == "username" {
+	// USERNAME SECTION
+	if section == "username" {
+
+		// check if username exists in accounts
+		for i, acc := range accounts {
+			if userInput == acc.username {
+				currentAccount = i // <<< THIS IS WHERE YOU SELECT THE ACCOUNT
+				fmt.Println()
+				return true
+			}
+		}
+
+		// new account command
+		if userInput == "new" {
 			fmt.Println("Making a new account...")
 			makeAccount()
+			return false
 		}
 
-		//if the user is in the password section and types help
-		if hintCommand == "help" && section == "password" {
-			fmt.Println("help")
-		}
-
-		//if the user just put in a wrong input
-	} else {
-		fmt.Println(Red + "Wrong " + outputType + " \n" + Reset)
+		fmt.Println(Red + "Wrong username\n" + Reset)
+		return false
 	}
 
+	// PASSWORD SECTION
+	if section == "password" {
+
+		// help command
+		if userInput == "help" {
+			fmt.Println("Hint: your password is the one assigned to your account")
+			return false
+		}
+
+		// <<< THIS IS WHERE YOU CHECK THE PASSWORD
+		if userInput == accounts[currentAccount].password {
+			fmt.Println()
+			return true
+		}
+
+		fmt.Println(Red + "Wrong password\n" + Reset)
+		return false
+	}
+
+	return false
+}
+
+// my version of conatins
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
 	return false
 }

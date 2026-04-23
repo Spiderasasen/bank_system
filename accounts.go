@@ -10,6 +10,8 @@ type Account struct {
 	withdrawAmount int
 }
 
+var currentAccount int = -1
+
 // main 4 accounts
 var accounts []Account = []Account{
 	{"admin", "password", 0, 2000},
@@ -36,10 +38,10 @@ func makeAccount() {
 }
 
 // getting the username of the Accounts table
-func getUsernameAcounts(currentAccount int) string {
+func getUsernameAcounts() string {
 	return accounts[currentAccount].username
 }
 
-func getPasswordAcounts(currentAccount int) string {
+func getPasswordAcounts() string {
 	return accounts[currentAccount].password
 }
