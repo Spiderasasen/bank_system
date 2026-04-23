@@ -11,10 +11,14 @@ var amount int = 0
 var onHand int = 2000
 var options []string = []string{"a. deposit", "b. withdraw", "c. logout"}
 
+// colors
+var Red = "\033[31m"
+var Cyan = "\033[36m"
+
 func mainBank(user string, pass string) bool {
 	var choice string
 	//printing out the user and the password
-	fmt.Println("Username: " + user)
+	fmt.Println("\nUsername: " + user)
 	fmt.Println("Password: " + pass)
 
 	//showing the amount and the options
@@ -38,6 +42,8 @@ func mainBank(user string, pass string) bool {
 	case "c":
 		fmt.Println("Logging out...")
 		return true
+	default:
+		fmt.Println(Red + "Invalid choice" + Reset)
 	}
 
 	return false
@@ -45,23 +51,23 @@ func mainBank(user string, pass string) bool {
 
 // depositing
 func deposit(balance *int, hand *int) int {
-	fmt.Println("\nHow much would you like to deposit?")
+	fmt.Println(Cyan + "\nHow much would you like to deposit?" + Reset)
 
 	var depositAmount int
 	_, err := fmt.Scanf("%d", &depositAmount)
 
 	if err != nil {
-		fmt.Println("Invalid input")
+		fmt.Println(Red + "Invalid input" + Reset)
 		return *balance
 	}
 
 	if depositAmount < 0 {
-		fmt.Println("Please enter a positive amount")
+		fmt.Println(Red + "Please enter a positive amount" + Reset)
 		depositAmount = int(math.Abs(float64(depositAmount)))
 	}
 
 	if *hand < depositAmount {
-		fmt.Println("You don't have enough cash on hand")
+		fmt.Println(Red + "You don't have enough cash on hand" + Reset)
 		return *balance
 	}
 
@@ -73,23 +79,23 @@ func deposit(balance *int, hand *int) int {
 
 // withdrawing
 func withdraw(balance *int, hand *int) int {
-	fmt.Println("\nHow much would you like to withdraw?")
+	fmt.Println(Cyan + "\nHow much would you like to withdraw?" + Reset)
 
 	var withdrawAmount int
 	_, err := fmt.Scanf("%d", &withdrawAmount)
 
 	if err != nil {
-		fmt.Println("Invalid input")
+		fmt.Println(Red + "Invalid input" + Reset)
 		return *hand
 	}
 
 	if withdrawAmount < 0 {
-		fmt.Println("Please enter a positive amount")
+		fmt.Println(Red + "Please enter a positive amount" + Reset)
 		withdrawAmount = int(math.Abs(float64(withdrawAmount)))
 	}
 
 	if *balance < withdrawAmount {
-		fmt.Println("You don't have enough in your account")
+		fmt.Println(Red + "You don't have enough in your account" + Reset)
 		return *hand
 	}
 

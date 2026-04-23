@@ -11,6 +11,10 @@ var username string
 var passwordHelp int
 var password string
 
+// colors
+var Reset = "\033[0m"
+var Yellow = "\033[33m"
+
 // getters
 func getUsername() string { return username }
 func getPassword() string { return password }
@@ -32,7 +36,7 @@ func mainLogin() bool {
 func loginArea(prompt string, input *string, helpCounter *int, hint1 string, hint2 string, answer string, label string) bool {
 	//gets the prompt to repeat the same system needed
 	fmt.Println("Enter a " + prompt + ": \n" +
-		"type \"help\" if you forgot your " + prompt)
+		Yellow + "type \"help\" if you forgot your " + prompt + Reset)
 
 	//gets the string input
 	fmt.Scan(input)
@@ -70,7 +74,7 @@ func loginChecker(userInput string, userHelp *int, hint1 string, hint2 string, a
 
 		//if the user just put in a wrong input
 	} else {
-		fmt.Println("Wrong " + outputType + " \n")
+		fmt.Println(Red + "Wrong " + outputType + " \n" + Reset)
 	}
 
 	return false
