@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"strconv" //makes it possible to print out integers in the print statment
 )
 
@@ -52,6 +53,7 @@ func deposit(in *int, hand *int) int {
 		//if the user is less then 0, yell at the user
 	} else if *in < 0 {
 		fmt.Println("Please enter a positive amount")
+		*in = int(math.Abs(float64(*in)))
 		//otherwise allow the user to deposit the money
 	} else {
 		*hand -= *in
