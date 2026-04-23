@@ -7,8 +7,6 @@ import (
 )
 
 // import vars here
-var amount int = 0
-var onHand int = 2000
 var options []string = []string{"a. deposit", "b. withdraw", "c. logout"}
 
 // colors
@@ -16,13 +14,18 @@ var Red = "\033[31m"
 var Cyan = "\033[36m"
 
 func mainBank(user string, pass string) bool {
+	//getting the username and password
+	var userPlace string = user
+	var passPlace string = pass
+
 	var choice string
 	//printing out the user and the password
-	fmt.Println("\nUsername: " + user)
-	fmt.Println("Password: " + pass)
+	fmt.Println("\nUsername: " + userPlace)
+	fmt.Println("Password: " + passPlace)
 
 	//showing the amount and the options
-	fmt.Println("\nAmount: " + strconv.Itoa(amount) + "\nOn Hand: " + strconv.Itoa(onHand) + "\n\nPlease select a option")
+	fmt.Println("\nAmount: " + strconv.Itoa(accounts[currentAccount].depositAmount))
+	fmt.Println("On Hand: " + strconv.Itoa(accounts[currentAccount].withdrawAmount))
 	for option := range options {
 		fmt.Println(options[option])
 	}
@@ -33,11 +36,11 @@ func mainBank(user string, pass string) bool {
 	switch choice {
 	case "a":
 		fmt.Println("deposit...")
-		amount = deposit(&amount, &onHand)
+		accounts[currentAccount].depositAmount = deposit(&accounts[currentAccount].depositAmount, &accounts[currentAccount].withdrawAmount)
 		break
 	case "b":
 		fmt.Println("withdraw...")
-		onHand = withdraw(&amount, &onHand)
+		accounts[currentAccount].withdrawAmount = withdraw(&accounts[currentAccount].depositAmount, &accounts[currentAccount].withdrawAmount)
 		break
 	case "c":
 		fmt.Println("Logging out...")
