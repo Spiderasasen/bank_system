@@ -104,5 +104,3 @@ func withdraw(balance *int, hand *int) int {
 
 	return *hand
 }
-
-//withdrawing
