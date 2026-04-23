@@ -31,7 +31,6 @@ func mainLogin() bool {
 		var passwordSection bool = false
 		for !passwordSection {
 			passwordSection = loginArea("password", "Type \"help\" if you forgot your password", &password)
-			break
 		}
 		return true
 	}
@@ -89,17 +88,14 @@ func loginChecker(userInput string, section string) bool {
 
 		// help command
 		if userInput == "help" {
-			fmt.Println("Hint: your password is the one assigned to your account")
+			fmt.Println("Your password is " + accounts[currentAccount].password)
 			return false
-		}
-
-		if userInput == accounts[currentAccount].password {
+		} else if userInput == accounts[currentAccount].password {
 			fmt.Println()
 			return true
 		}
 
 		fmt.Println(Red + "Wrong password\n" + Reset)
-		return false
 	}
 
 	return false
