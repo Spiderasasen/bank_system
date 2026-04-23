@@ -18,9 +18,6 @@ var accounts []Account = []Account{
 	{"smithy", "qwerty", 300, 100},
 }
 
-// getting the accounts index for the password
-var currentAccount int = -1
-
 // if the user wants to make another account
 func makeAccount() {
 	var accoutLoginItems string
@@ -39,10 +36,10 @@ func makeAccount() {
 }
 
 // getting the username of the Accounts table
-func getUsernameAcounts() string {
+func getUsernameAcounts(currentAccount int) string {
 	return accounts[currentAccount].username
 }
 
-func getPasswordAcounts() string {
+func getPasswordAcounts(currentAccount int) string {
 	return accounts[currentAccount].password
 }

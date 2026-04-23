@@ -18,6 +18,13 @@ func getUsername() string { return username }
 func getPassword() string { return password }
 
 func mainLogin() bool {
+
+	//places all username in an array
+	var usernames []string
+	for _, account := range accounts {
+		usernames = append(usernames, account.username)
+	}
+
 	//username
 	if loginArea("username", "Type \"new\" to make a new account", &username, "new", "admin", "username") {
 		//password
@@ -34,7 +41,7 @@ func mainLogin() bool {
 func loginArea(prompt string, questionArea string, input *string, hintCommand string, answer string, label string) bool {
 	//gets the prompt to repeat the same system needed
 	fmt.Println("Enter a " + prompt + ": \n" +
-		Yellow + questionArea + prompt + Reset)
+		Yellow + questionArea + Reset)
 
 	//gets the string input
 	fmt.Scan(input)
