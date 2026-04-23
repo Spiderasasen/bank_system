@@ -6,9 +6,7 @@ import (
 )
 
 // private vars
-var usernameHelp int //used as a pointer in the function i call in line 24
 var username string
-var passwordHelp int
 var password string
 
 // colors
@@ -21,11 +19,11 @@ func getPassword() string { return password }
 
 func mainLogin() bool {
 	//username
-	if loginArea("username", &username, &usernameHelp, "What is the username in DVWA?", "The username is \"admin\"", "admin", "username") {
+	if loginArea("username", "Type \"new\" to make a new account", &username, "new", "admin", "username") {
 		//password
 		var passwordSection bool = false
 		for !passwordSection {
-			passwordSection = loginArea("password", &password, &passwordHelp, "What is the password in DVWA?", "The password is \"password\"", "password", "password")
+			passwordSection = loginArea("password", "Type \"help\" if you forgot your password", &password, "help", "password", "password")
 		}
 		return true
 	}
@@ -33,10 +31,10 @@ func mainLogin() bool {
 }
 
 // main login area
-func loginArea(prompt string, input *string, helpCounter *int, hint1 string, hint2 string, answer string, label string) bool {
+func loginArea(prompt string, questionArea string, input *string, hintCommand string, answer string, label string) bool {
 	//gets the prompt to repeat the same system needed
 	fmt.Println("Enter a " + prompt + ": \n" +
-		Yellow + "type \"help\" if you forgot your " + prompt + Reset)
+		Yellow + questionArea + prompt + Reset)
 
 	//gets the string input
 	fmt.Scan(input)
@@ -45,7 +43,7 @@ func loginArea(prompt string, input *string, helpCounter *int, hint1 string, hin
 	*input = strings.ToLower(*input)
 
 	//checks if the input is valid or not
-	if loginChecker(*input, helpCounter, hint1, hint2, answer, label) {
+	if loginChecker(*input, prompt, hintCommand, answer, label) {
 		return true
 	}
 
@@ -53,23 +51,23 @@ func loginArea(prompt string, input *string, helpCounter *int, hint1 string, hin
 }
 
 // checks if the login was successful or not
-func loginChecker(userInput string, userHelp *int, hint1 string, hint2 string, answer string, outputType string) bool {
+func loginChecker(userInput string, section string, hintCommand string, answer string, outputType string) bool {
 	//if the user input is the same as the intended answer
 	if userInput == answer {
 		fmt.Println()
 		return true
 
 		//the user ask for help
-	} else if userInput == "help" {
-		*userHelp++ //gets the orginal input from the class then returns that input
+	} else if userInput == hintCommand {
+		//if the user is in the login page and types new
+		if hintCommand == "new" && section == "username" {
+			fmt.Println("Making a new account...")
+			makeAccount()
+		}
 
-		//if userHelp == 1, give hint1
-		if *userHelp == 1 {
-			fmt.Println(hint1 + "\n")
-
-			//will print hint 2
-		} else {
-			fmt.Println(hint2 + "\n")
+		//if the user is in the password section and types help
+		if hintCommand == "help" && section == "password" {
+			fmt.Println("help")
 		}
 
 		//if the user just put in a wrong input
