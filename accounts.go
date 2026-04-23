@@ -32,6 +32,7 @@ func makeAccount() {
 	placeHolder1 = accoutLoginItems
 	fmt.Println("What would you like to have as your password?")
 	fmt.Scanln(&placeHolder2)
+	fmt.Println()
 
 	//appened it to the map
 	accounts = append(accounts, Account{placeHolder1, placeHolder2, 0, 3000})

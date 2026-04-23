@@ -74,7 +74,7 @@ func loginChecker(userInput string, section string) bool {
 
 		// new account command
 		if userInput == "new" {
-			fmt.Println("Making a new account...")
+			fmt.Println(Cyan + "Making a new account...\n" + Reset)
 			makeAccount()
 			return false
 		}
@@ -88,7 +88,7 @@ func loginChecker(userInput string, section string) bool {
 
 		// help command
 		if userInput == "help" {
-			fmt.Println("Your password is " + accounts[currentAccount].password)
+			fmt.Println(Cyan + "Your password is " + accounts[currentAccount].password + Reset + "\n")
 			return false
 		} else if userInput == accounts[currentAccount].password {
 			fmt.Println()
