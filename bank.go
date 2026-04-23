@@ -7,7 +7,7 @@ import (
 )
 
 // import vars here
-var options []string = []string{"a. deposit", "b. withdraw", "c. logout"}
+var options []string = []string{"a. deposit", "b. withdraw", "c. send money to another account", "d. logout"}
 
 // colors
 var Red = "\033[31m"
@@ -43,6 +43,10 @@ func mainBank(user string, pass string) bool {
 		accounts[currentAccount].withdrawAmount = withdraw(&accounts[currentAccount].depositAmount, &accounts[currentAccount].withdrawAmount)
 		break
 	case "c":
+		fmt.Println("Sending money...")
+		accounts[currentAccount].withdrawAmount = sendingMoney(&accounts[currentAccount].withdrawAmount, user)
+		break
+	case "d":
 		fmt.Println("Logging out...")
 		return true
 	default:
@@ -104,6 +108,42 @@ func withdraw(balance *int, hand *int) int {
 
 	*balance -= withdrawAmount
 	*hand += withdrawAmount
+
+	return *hand
+}
+
+// just showing the user that there are more accounts in the sending money section
+func sendingMoney(hand *int, username string) int {
+	var area int = 0
+	fmt.Println("Who would you like to send money too?")
+
+	for i, accout := range accounts {
+		if accout.username == username {
+			continue
+		}
+		fmt.Println(strconv.Itoa(i) + ". " + accout.username)
+		area++
+	}
+
+	var balance int
+	var option int
+
+	//scanning the option
+	_, err := fmt.Scanf("%d", &option)
+	if err != nil {
+		fmt.Println(Red + "Invalid input" + Reset)
+		return *hand
+	}
+
+	fmt.Println("How much would you like to send?")
+	_, err = fmt.Scanf("%d", &balance)
+	if err != nil {
+		fmt.Println(Red + "Invalid input" + Reset)
+	} else if balance < 0 {
+		fmt.Println(Red + "Please enter a positive amount" + Reset)
+	} else {
+		*hand -= balance
+	}
 
 	return *hand
 }
