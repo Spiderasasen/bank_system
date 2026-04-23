@@ -26,11 +26,11 @@ func mainLogin() bool {
 	}
 
 	//username
-	if loginArea("username", "Type \"new\" to make a new account", &username, "new", usernames, "admin", "username") {
+	if loginArea("username", "Type \"new\" to make a new account", &username) {
 		//password
 		var passwordSection bool = false
 		for !passwordSection {
-			passwordSection = loginArea("password", "Type \"help\" if you forgot your password", &password, "help", usernames, "password", "password")
+			passwordSection = loginArea("password", "Type \"help\" if you forgot your password", &password)
 			break
 		}
 		return true
@@ -39,7 +39,7 @@ func mainLogin() bool {
 }
 
 // main login area
-func loginArea(prompt string, questionArea string, input *string, hintCommand string, accountSystem []string, answer string, label string) bool {
+func loginArea(prompt string, questionArea string, input *string) bool {
 	//gets the prompt to repeat the same system needed
 	fmt.Println("Enter a " + prompt + ": \n" +
 		Yellow + questionArea + Reset)
@@ -51,7 +51,7 @@ func loginArea(prompt string, questionArea string, input *string, hintCommand st
 	*input = strings.ToLower(*input)
 
 	//checks if the input is valid or not
-	if loginChecker(*input, prompt, hintCommand, accountSystem, answer, label) {
+	if loginChecker(*input, prompt) {
 		return true
 	}
 
@@ -59,7 +59,7 @@ func loginArea(prompt string, questionArea string, input *string, hintCommand st
 }
 
 // checks if the login was successful or not
-func loginChecker(userInput string, section string, hintCommand string, accountSystem []string, answer string, outputType string) bool {
+func loginChecker(userInput string, section string) bool {
 
 	// USERNAME SECTION
 	if section == "username" {
@@ -67,7 +67,7 @@ func loginChecker(userInput string, section string, hintCommand string, accountS
 		// check if username exists in accounts
 		for i, acc := range accounts {
 			if userInput == acc.username {
-				currentAccount = i // <<< THIS IS WHERE YOU SELECT THE ACCOUNT
+				currentAccount = i
 				fmt.Println()
 				return true
 			}
@@ -93,7 +93,6 @@ func loginChecker(userInput string, section string, hintCommand string, accountS
 			return false
 		}
 
-		// <<< THIS IS WHERE YOU CHECK THE PASSWORD
 		if userInput == accounts[currentAccount].password {
 			fmt.Println()
 			return true
