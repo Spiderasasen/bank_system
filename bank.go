@@ -114,7 +114,7 @@ func withdraw(balance *int, hand *int) int {
 
 // just showing the user that there are more accounts in the sending money section
 func sendingMoney(hand *int, username string) int {
-	var area int = 0
+	var intOptions []int
 	fmt.Println("Who would you like to send money too?")
 
 	for i, accout := range accounts {
@@ -122,7 +122,7 @@ func sendingMoney(hand *int, username string) int {
 			continue
 		}
 		fmt.Println(strconv.Itoa(i) + ". " + accout.username)
-		area++
+		intOptions = append(intOptions, i)
 	}
 
 	var balance int
@@ -132,6 +132,9 @@ func sendingMoney(hand *int, username string) int {
 	_, err := fmt.Scanf("%d", &option)
 	if err != nil {
 		fmt.Println(Red + "Invalid input" + Reset)
+		return *hand
+	} else if !isAOption(intOptions, option) {
+		fmt.Println(Red + "Please enter a valid option." + Reset)
 		return *hand
 	}
 
@@ -146,4 +149,15 @@ func sendingMoney(hand *int, username string) int {
 	}
 
 	return *hand
+}
+
+// checking if the user selected 1 of the options
+func isAOption(options []int, choice int) bool {
+	for _, option := range options {
+		if choice == option {
+			return true
+		}
+	}
+
+	return false
 }
