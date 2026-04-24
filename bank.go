@@ -12,6 +12,7 @@ var options []string = []string{"a. deposit", "b. withdraw", "c. send money to a
 // colors
 var Red = "\033[31m"
 var Cyan = "\033[36m"
+var Green = "\033[32m"
 
 func mainBank(user string, pass string) bool {
 	//getting the username and password
@@ -35,19 +36,19 @@ func mainBank(user string, pass string) bool {
 	//seeing what option the user selected
 	switch choice {
 	case "a":
-		fmt.Println("deposit...")
+		fmt.Println(Green + "deposit..." + Reset)
 		accounts[currentAccount].depositAmount = deposit(&accounts[currentAccount].depositAmount, &accounts[currentAccount].withdrawAmount)
 		break
 	case "b":
-		fmt.Println("withdraw...")
+		fmt.Println(Green + "withdraw..." + Reset)
 		accounts[currentAccount].withdrawAmount = withdraw(&accounts[currentAccount].depositAmount, &accounts[currentAccount].withdrawAmount)
 		break
 	case "c":
-		fmt.Println("Sending money...")
+		fmt.Println(Green + "Sending money..." + Reset)
 		accounts[currentAccount].withdrawAmount = sendingMoney(&accounts[currentAccount].withdrawAmount, user)
 		break
 	case "d":
-		fmt.Println("Logging out...")
+		fmt.Println(Red + "Logging out..." + Reset)
 		return true
 	default:
 		fmt.Println(Red + "Invalid choice" + Reset)
